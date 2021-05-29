@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const passport = require('passport');
 const passportConfig = require('./services/auth');
-const MongoStore = require('connect-mongo')(session);
+// const MongoStore = require('connect-mongo')(session);
 const schema = require('./schema/schema');
 
 // Create a new Express application
@@ -49,10 +49,10 @@ app.use(
     resave: true,
     saveUninitialized: true,
     secret: 'aaabbbccc',
-    store: new MongoStore({
-      url: MONGO_URI,
-      autoReconnect: true,
-    }),
+    // store: new MongoStore({
+    //   url: MONGO_URI,
+    //   autoReconnect: true,
+    // }),
   })
 );
 
@@ -72,4 +72,6 @@ app.use(
   })
 );
 
-module.exports = app;
+app.listen(5000, () => {
+  `Listening on port 5000`;
+});
