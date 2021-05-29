@@ -1,25 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { ApolloClient, InMemoryCache } from '@apollo/client';
+import { ApolloProvider } from '@apollo/client/react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom';
 
-function App() {
+import Layout from './components/Layout';
+
+const client = new ApolloClient({
+  uri: 'http://localhost:5000/graphql',
+  cache: new InMemoryCache(),
+});
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ApolloProvider client={client}>
+      <Router>
+        <Switch>
+          <Route path='/' exact render={props => <Layout {...props} />} />
+
+          {/* <Route
+            path='/song/new'
+            render={(props) => <SongCreate {...props} />}
+          />
+
+          <Route
+            path='/song/:id'
+            render={(props) => <SongDetail {...props} />}
+          /> */}
+        </Switch>
+      </Router>
+    </ApolloProvider>
   );
-}
+};
 
 export default App;
