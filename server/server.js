@@ -4,6 +4,7 @@ const expressGraphQL = require('express-graphql');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const passport = require('passport');
+const cors = require('cors');
 const passportConfig = require('./services/auth');
 // const MongoStore = require('connect-mongo')(session);
 const schema = require('./schema/schema');
@@ -44,6 +45,12 @@ if (!MONGO_URI) {
 // the cookie and modifies the request object to indicate which user made the request
 // The cookie itself only contains the id of a session; more data about the session
 // is stored inside of MongoDB.
+
+let corsOptions = {
+  origin: 'http://localhost:3000',
+  credentials: true, // <-- REQUIRED backend setting
+};
+app.use(cors(corsOptions));
 app.use(
   session({
     resave: true,
@@ -53,7 +60,7 @@ app.use(
     //   url: MONGO_URI,
     //   autoReconnect: true,
     // }),
-  })
+  }),
 );
 
 // Passport is wired into express as a middleware. When a request comes in,
@@ -69,8 +76,19 @@ app.use(
   expressGraphQL({
     schema,
     graphiql: true,
-  })
+  }),
 );
+
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'Origin,X-Requested-With,Content-Type,Accept,Authorization',
+  );
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PATCH,DELETE');
+  next();
+});
 
 app.listen(5000, () => {
   `Listening on port 5000`;
