@@ -1,19 +1,34 @@
 import React from 'react';
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import { Link } from 'react-router-dom';
 
 import fetchCurrentUser from '../queries/CurrentUser';
+import Logout from '../mutations/Logout';
 
 const Header = () => {
-  const FETCH_CURRENT_USER = fetchCurrentUser;
+  const [logout] = useMutation(Logout);
 
-  const { data, loading, error } = useQuery(FETCH_CURRENT_USER);
+  const { data, loading, error } = useQuery(fetchCurrentUser);
+
+  const logoutHandler = async () => {
+    try {
+      await logout({
+        refetchQueries: [{ query: fetchCurrentUser }],
+      });
+    } catch (err) {
+      console.log('error', err, error);
+    }
+  };
 
   const renderButtons = () => {
     if (loading) return <div></div>;
 
     if (data.user) {
-      return <div>Logout</div>;
+      return (
+        <li>
+          <a onClick={logoutHandler}>Logout</a>
+        </li>
+      );
     }
 
     return (
