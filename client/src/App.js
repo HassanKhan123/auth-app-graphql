@@ -9,6 +9,7 @@ import {
 } from 'react-router-dom';
 
 import Layout from './components/Layout';
+import LoginForm from './components/LoginForm';
 
 const link = createHttpLink({
   uri: 'http://localhost:5000/graphql',
@@ -28,12 +29,16 @@ const App = () => {
         <Switch>
           <Route path='/' exact render={props => <Layout {...props} />} />
 
-          {/* <Route
-            path='/song/new'
-            render={(props) => <SongCreate {...props} />}
+          <Route
+            path='/login'
+            render={props => (
+              <Layout {...props}>
+                <LoginForm />
+              </Layout>
+            )}
           />
 
-          <Route
+          {/* <Route
             path='/song/:id'
             render={(props) => <SongDetail {...props} />}
           /> */}
