@@ -34,7 +34,7 @@ const App = () => {
             path='/login'
             render={props => (
               <Layout {...props}>
-                <LoginForm />
+                <LoginForm {...props} />
               </Layout>
             )}
           />
@@ -43,7 +43,7 @@ const App = () => {
             path='/signup'
             render={props => (
               <Layout {...props}>
-                <SignupForm />
+                <SignupForm {...props} />
               </Layout>
             )}
           />

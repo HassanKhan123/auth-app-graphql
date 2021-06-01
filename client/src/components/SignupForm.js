@@ -1,14 +1,21 @@
-import React, { useState } from 'react';
-import { useMutation } from '@apollo/client';
+import React, { useState, useEffect } from 'react';
+import { useMutation, useQuery } from '@apollo/client';
 
 import AuthForm from './AuthForm';
 import Signup from '../mutations/Signup';
 
 import fetchCurrentUser from '../queries/CurrentUser';
 
-const SignupForm = () => {
+const SignupForm = props => {
   const [error, setError] = useState('');
   const [signup] = useMutation(Signup);
+  const { data } = useQuery(fetchCurrentUser);
+
+  useEffect(() => {
+    if (data?.user) {
+      props.history.push('/dashboard');
+    }
+  }, [data]);
 
   const submitHandler = async ({ email, password }) => {
     try {
