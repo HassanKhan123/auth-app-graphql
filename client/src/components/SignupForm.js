@@ -2,17 +2,17 @@ import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 
 import AuthForm from './AuthForm';
-import Login from '../mutations/Login';
+import Signup from '../mutations/Signup';
 
 import fetchCurrentUser from '../queries/CurrentUser';
 
-const LoginForm = () => {
+const SignupForm = () => {
   const [error, setError] = useState('');
-  const [login] = useMutation(Login);
+  const [signup] = useMutation(Signup);
 
   const submitHandler = async ({ email, password }) => {
     try {
-      await login({
+      await signup({
         variables: { email, password },
         refetchQueries: [{ query: fetchCurrentUser }],
       });
@@ -24,10 +24,10 @@ const LoginForm = () => {
 
   return (
     <div className='container'>
-      <h3>Login</h3>
+      <h3>Signup</h3>
       <AuthForm onSubmit={submitHandler} error={error} />
     </div>
   );
 };
 
-export default LoginForm;
+export default SignupForm;

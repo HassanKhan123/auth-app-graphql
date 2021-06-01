@@ -10,6 +10,7 @@ import {
 
 import Layout from './components/Layout';
 import LoginForm from './components/LoginForm';
+import SignupForm from './components/SignupForm';
 
 const link = createHttpLink({
   uri: 'http://localhost:5000/graphql',
@@ -38,10 +39,14 @@ const App = () => {
             )}
           />
 
-          {/* <Route
-            path='/song/:id'
-            render={(props) => <SongDetail {...props} />}
-          /> */}
+          <Route
+            path='/signup'
+            render={props => (
+              <Layout {...props}>
+                <SignupForm />
+              </Layout>
+            )}
+          />
         </Switch>
       </Router>
     </ApolloProvider>
