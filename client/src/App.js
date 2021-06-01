@@ -11,6 +11,7 @@ import {
 import Layout from './components/Layout';
 import LoginForm from './components/LoginForm';
 import SignupForm from './components/SignupForm';
+import Dashboard from './components/Dashboard';
 
 const link = createHttpLink({
   uri: 'http://localhost:5000/graphql',
@@ -44,6 +45,15 @@ const App = () => {
             render={props => (
               <Layout {...props}>
                 <SignupForm {...props} />
+              </Layout>
+            )}
+          />
+
+          <Route
+            path='/dashboard'
+            render={props => (
+              <Layout {...props}>
+                <Dashboard {...props} />
               </Layout>
             )}
           />
