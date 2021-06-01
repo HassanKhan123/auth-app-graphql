@@ -7,6 +7,8 @@ const AuthForm = props => {
   const submitHandler = async e => {
     e.preventDefault();
     await props.onSubmit({ email, password });
+    setEmail('');
+    setPassword('');
   };
 
   return (
@@ -28,7 +30,7 @@ const AuthForm = props => {
             placeholder='Password'
           />
         </div>
-
+        {props.error && <div className='errors'>{props.error}</div>}
         <button className='btn'>Submit</button>
       </form>
       ;
